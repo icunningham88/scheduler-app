@@ -29,6 +29,7 @@ export default {
     axios.get("https://scheduler-challenge.herokuapp.com/schedule")
     .then(result => {
       var events = result.data.data;
+      // Handle the event that only had a cron format with 4 entries
       var indexOfShortCronFormat = events.findIndex(event => event.attributes.cron.split(' ').length == 4);
       if (indexOfShortCronFormat !== -1 ) {
         var updatedCron = events[indexOfShortCronFormat].attributes.cron + " *";
@@ -45,23 +46,6 @@ export default {
         var notification = new Notification(event.name);
       }
     })
-  },
-
-  /*mounted() {
-    this.$on('display-notification', event => {
-      if (this.allowNotifications === 'granted') {
-        var notification = new Notification(event.name);
-        notification.show();
-      }
-    })
-  },*/
-  methods: {
-    
-    displayNotificationFromCronJob(response) {
-      if (response === 'granted') {
-         var notification = new Notification("Hi there!");
-      }
-    }
   },
   components: {
     'event-list': EventList

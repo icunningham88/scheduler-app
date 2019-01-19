@@ -98,16 +98,22 @@ export default {
             this.sortOnDate(this.displayedEvents);
 
         },
+        // Iterate through the events, creating cron parsers that
+        // starts 3 hours before the current time and ends at the
+        // current time
         populateLastThreeHours() {
             this.eventArray.forEach(event => {
                 this.populateDisplayArrayByInterval(this.threeHoursPastNow, this.now, event, true, 10);
             })
         },
+        // Iterate through the events, creating cron parsers that
+        // starts at the current time and ends 24 hours later
         populateNextDay() {
             this.eventArray.forEach(event => {
                 this.populateDisplayArrayByInterval(this.now, this.oneDayBeforeNow, event, false, 40);
             });
         },
+        // Get the events that occur within a given segment of time
         populateDisplayArrayByInterval(start, end, cronEvent, isPastEvent, steps) {
 
             var interval = this.createCronParser(start, end, cronEvent.attributes.cron);
@@ -122,6 +128,8 @@ export default {
             });
         },
 
+        // Creates the cron array that holds cron parsers
+        // that compute future events.
         createCronArray() {
             var start = moment.tz(this.timezone).add(24, 'hours').toDate();
             this.eventArray.forEach(event => {
@@ -175,6 +183,7 @@ export default {
             setInterval(() => this.oneDayBeforeNow = moment.tz(this.timezone).add(24, 'hours'), 1000 * 60);
         },
 
+        // Remove events that occurred past 3 hours
         checkForEventsToPop() {
             var oldEvent = this.displayedEvents[0].date;
             if (oldEvent.isBefore(this.threeHoursPastNow)) {
@@ -183,6 +192,7 @@ export default {
             }
         },
 
+        // Send notifications for events occurring now
         checkForEventsToNotify() {
             var nextEvent = this.displayedEvents[this.nextEventIndex];
             if (nextEvent.date.isBefore(this.now)) {
@@ -192,7 +202,7 @@ export default {
             }
         },
 
-        // Iterate through the cron expression
+        // Iterate through the cron parser
         // to check if any event is within 24 hours
         checkForEventsToPush() {
             var addedEvent = {};
