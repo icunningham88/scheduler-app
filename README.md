@@ -2,6 +2,8 @@
 
 > SPA that tracks events
 
+This is an application that is built in Vuejs. Please ensure that you have Vuejs installed.
+
 ## Build Setup
 
 ``` bash
