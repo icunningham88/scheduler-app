@@ -15,7 +15,6 @@
 import EventItem from './EventItem.vue'
 import parser from 'cron-parser'
 import moment from 'moment-timezone'
-import Vue from 'Vue'
 import { bus } from '../main';
 export default {
     name: "EventList",

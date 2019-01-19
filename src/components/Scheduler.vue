@@ -11,7 +11,6 @@
 <script>
 import axios from 'axios'
 import EventList from './EventList.vue'
-import Vue from 'Vue'
 import { bus } from '../main';
 export default {
   name: 'Scheduler',
